@@ -5,6 +5,5 @@ import com.riadh.mdneedyou.model.User;
 
 public interface UserDAO extends Executer<User> {
 
-	public boolean checkLogin(String userName, String userPassword);
-
+	
 }

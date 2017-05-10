@@ -42,12 +42,7 @@ public class UserServiceImpl implements UserService {
 		this.userDAO.remove(id);
 	}
 
-	@Override
-	public boolean checkLogin(String userName, String userPassword) {
-		System.out.println("In Service class...Check Login");
-		return this.userDAO.checkLogin(userName, userPassword);
-	}
-
+	
 	@Override
 	public User getByName(String userName) {
 

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.riadh.mdneedyou.dao.UserDAO;
 import com.riadh.mdneedyou.model.User;
-import com.riadh.mdneedyou.util.SecurePassword;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -20,24 +19,6 @@ public class UserDAOImpl implements UserDAO {
 
 	@Autowired
 	private EntityManager entityManager;
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean checkLogin(String userName, String userPassword) {
-
-		boolean userFound = false;
-		userPassword = SecurePassword.getSecurePassword(userPassword);
-		// Query using Hibernate Query Language
-		String SQL_QUERY = " from User as o where o.userName= '" + userName + "' and o.userPassword= '" + userPassword
-				+ "'";
-		List<User> list = entityManager.createQuery(SQL_QUERY).getResultList();
-
-		if ((list != null) && (list.size() > 0)) {
-			userFound = true;
-		}
-
-		return userFound;
-	}
 
 	@Override
 	public void add(User p) {
