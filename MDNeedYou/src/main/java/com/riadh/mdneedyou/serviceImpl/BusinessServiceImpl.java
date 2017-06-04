@@ -43,15 +43,20 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 	
 	@Override
-	public boolean checkLogin(String businessName, String businessPassword) {
-		System.out.println("In Service class...Check Login");
-		return this.BusinessDAO.checkLogin(businessName, businessPassword);
+	public List<Business> listByCity(String city) {
+		return this.BusinessDAO.listByCity(city);
 	}
 
 	@Override
 	public Business getByName(String BusinessName) {
 
 		return this.BusinessDAO.getByName(BusinessName);
+	}
+	
+	@Override
+	public Business login (String email, String password) {
+
+		return this.BusinessDAO.login(email, password);
 	}
 
 }

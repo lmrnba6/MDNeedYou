@@ -1,5 +1,6 @@
 package com.riadh.mdneedyou.daoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.riadh.mdneedyou.dao.BusinessDAO;
 import com.riadh.mdneedyou.model.Business;
+import com.riadh.mdneedyou.model.User;
 import com.riadh.mdneedyou.util.SecurePassword;
 
 @Repository
@@ -56,22 +58,11 @@ public class BusinessDAOImpl implements BusinessDAO {
 		return Business;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public boolean checkLogin(String email, String pass) {
-
-		boolean BusinessFound = false;
-		pass = SecurePassword.getSecurePassword(pass);
-		// Query using Hibernate Query Language
-		String SQL_QUERY = " from Business as o where o.email= '" + email + "' and o.password= '" + pass
-				+ "'";
-		List<Business> list = entityManager.createQuery(SQL_QUERY).getResultList();
-
-		if ((list != null) && (list.size() > 0)) {
-			BusinessFound = true;
-		}
-
-		return BusinessFound;
+	public List<Business> listByCity(String city) {
+		String SQL_QUERY = " from Business as o left join o.address as a where a.city = :city ";
+		List<Business> list = entityManager.createQuery(SQL_QUERY).setParameter("city",city).getResultList();
+		return list;
 	}
 
 	@Override
@@ -87,6 +78,18 @@ public class BusinessDAOImpl implements BusinessDAO {
 	public Business getByName(String BusinessName) {
 		//TODO
 		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Business login(String email, String password) {
+
+		List<Object[]> business  = new ArrayList<>();
+		//password=SecurePassword.getSecurePassword(password);
+		String SQL_QUERY = " from Business as o join o.contact as c where c.email = :email and o.password = :password ";
+		business = entityManager.createQuery(SQL_QUERY).setParameter("email", email).setParameter("password", password).getResultList();
+		Business b = business.size()!= 0 ? (Business) business.get(0)[0] : null;
+		return b;
 	}
 
 }

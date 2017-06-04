@@ -25,6 +25,8 @@ public class Address {
 	private Long addressId;
 	@Column(name = "STREET_NUMBER")
 	private Long streetNumber;
+	@Column(name = "CITY")
+	private String city;
 	@Column(name = "STREET_NAME")
 	private String streetName;
 	@Column(name = "PROVINCE")
