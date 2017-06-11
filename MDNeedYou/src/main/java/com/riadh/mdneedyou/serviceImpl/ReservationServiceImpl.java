@@ -1,5 +1,6 @@
 package com.riadh.mdneedyou.serviceImpl;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,16 @@ public class ReservationServiceImpl implements ReservationService {
 	public Reservation getByName(String ReservationName) {
 
 		return this.ReservationDAO.getByName(ReservationName);
+	}
+	
+	@Override
+	public List<Reservation> getByBusiness(Long id){
+		return this.ReservationDAO.getByBusiness(id);
+	}
+	
+	@Override
+	public List<Reservation> getByDate(Date date, Long id){
+		return this.ReservationDAO.getByDate(date, id);
 	}
 
 }

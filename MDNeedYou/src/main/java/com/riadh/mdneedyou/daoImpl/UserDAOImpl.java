@@ -64,10 +64,10 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public User getByName(String userName) {
+	public User getByName(String name) {
 
-		String SQL_QUERY = "from User u where u.userName = '" + userName + "'";
-		List<User> userList = entityManager.createQuery(SQL_QUERY).getResultList();
+		String SQL_QUERY = "from User u where u.name = :name";
+		List<User> userList = entityManager.createQuery(SQL_QUERY).setParameter("name", name).getResultList();
 
 		if (userList.size() > 0)
 			return userList.get(0);

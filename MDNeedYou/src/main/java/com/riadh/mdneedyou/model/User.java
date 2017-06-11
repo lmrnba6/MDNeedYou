@@ -26,14 +26,11 @@ public class User
     @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Column(name = "FIRSTNAME")
-    private String firstName;
-    @Column(name = "LASTNAME")
-    private String lastName;
-    @OneToOne
-    @JoinColumn(name = "CONTACT_ID")
-    private Contact contact;
-    @OneToOne
-    @JoinColumn(name = "ADRESS_ID")
-    private Address address;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "PHONE")
+    private String phone;
+    @Column(name = "EMAIL")
+    private String email;
+
 }

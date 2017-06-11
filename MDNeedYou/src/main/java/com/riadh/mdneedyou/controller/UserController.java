@@ -42,15 +42,4 @@ public class UserController {
 		return userService.list();
 	}
 	
-	@RequestMapping(value="/add/{lname}/{fname}")
-	public User removeUser(@PathVariable String lname, @PathVariable String fname){
-		
-		User user = new User();
-		user.setFirstName(fname);
-		user.setLastName(lname);
-		userService.add(user);
-		
-		return user;
-	}
-
 }

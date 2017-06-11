@@ -1,5 +1,6 @@
 package com.riadh.mdneedyou.daoImpl;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -69,5 +70,21 @@ public class ReservationDAOImpl implements ReservationDAO {
 		//TODO
 		return null;
 	}
+	
+	public List<Reservation> getByBusiness(Long id) {
+		
+		@SuppressWarnings("unchecked")
+		List<Reservation> ReservationsList = entityManager.createQuery("from Reservation as r where r.businessId = :id").setParameter("id", id).getResultList();
+		return ReservationsList;
+	}
+	
+	public List<Reservation> getByDate(Date date, Long id){
+	
+		@SuppressWarnings("unchecked")
+		List<Reservation> ReservationsList = entityManager.createQuery("select r from Reservation as r join r.business as b where r.date = :date and b.businessId = :id").setParameter("date", date).setParameter("id", id).getResultList();
+		return ReservationsList;
+	}
+	
+	
 
 }
