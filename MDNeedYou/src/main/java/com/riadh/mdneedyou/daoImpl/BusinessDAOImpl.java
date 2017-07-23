@@ -60,7 +60,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 	
 	@Override
 	public List<Business> listByCity(String city) {
-		String SQL_QUERY = " select o from Business as o inner join o.address as a where a.city = :city ";
+		String SQL_QUERY = " select o from Business as o inner join o.address as a where LOWER(a.city) = :city ";
 		List<Business> list = entityManager.createQuery(SQL_QUERY).setParameter("city",city).getResultList();
 		return list;
 	}

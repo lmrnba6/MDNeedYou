@@ -1,6 +1,7 @@
 package com.riadh.mdneedyou.util;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -19,7 +20,7 @@ public class Email {
  
 	
  
-	public static void generateAndSendEmail(String textField,String subject,String body) throws AddressException, MessagingException {
+	public static void generateAndSendEmail(String textField,String subject,String body) throws AddressException, MessagingException, UnsupportedEncodingException {
  
 		// Step1
 		System.out.println("\n 1st ===> setup Mail Server Properties..");
@@ -33,10 +34,11 @@ public class Email {
 		System.out.println("\n\n 2nd ===> get Mail Session..");
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		generateMailMessage = new MimeMessage(getMailSession);
-		generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(textField));
+		generateMailMessage.setFrom(new InternetAddress("mdneedyou2017", "MDNeedYou"));
+		generateMailMessage.addRecipients(Message.RecipientType.TO, textField);
 		//generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
-		generateMailMessage.setSubject(subject);
-		String emailBody = "<p>"+body+" </p> " + "<br><br> Regards, <br>Easy-univ Admin";
+		generateMailMessage.setSubject(subject,"UTF-8");
+		String emailBody = "<p>"+body+" </p> " + "<br><br> Regards, <br>MDNeedYou Admin";
 		generateMailMessage.setContent(emailBody, "text/html");
 		System.out.println("Mail Session has been created successfully..");
  
@@ -46,7 +48,7 @@ public class Email {
  
 		// Enter your correct gmail UserID and Password
 		// if you have 2FA enabled then provide App Specific Password
-		transport.connect("smtp.gmail.com", "MDNeedYou@gmail.com", "mdneedyousherbrooke");
+		transport.connect("smtp.gmail.com", "mdneedyou2017", "mdneedyousherbrooke");
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 		transport.close();
 	}

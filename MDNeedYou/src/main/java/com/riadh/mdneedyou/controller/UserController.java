@@ -13,7 +13,7 @@ import com.riadh.mdneedyou.service.UserService;
 
 
 
-@CrossOrigin(origins = {"http://localhost:8080" , "http://localhost:3000"} )
+@CrossOrigin(origins = {"http://localhost:8080" , "http://localhost:3000", "http://localhost:4200"} )
 @RestController
 @RequestMapping("user")
 public class UserController {

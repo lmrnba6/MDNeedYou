@@ -24,7 +24,7 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long contactId;
 	@Column(name = "PHONE_NUMBER")
-	private String PHONE_NUMBER;
+	private String phone;
 	@Column(name = "EMAIL")
 	private String email;
 }

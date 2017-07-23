@@ -74,7 +74,7 @@ public class ReservationDAOImpl implements ReservationDAO {
 	public List<Reservation> getByBusiness(Long id) {
 		
 		@SuppressWarnings("unchecked")
-		List<Reservation> ReservationsList = entityManager.createQuery("from Reservation as r where r.businessId = :id").setParameter("id", id).getResultList();
+		List<Reservation> ReservationsList = entityManager.createQuery("select r from Reservation as r join r.business as b where b.businessId = :id").setParameter("id", id).getResultList();
 		return ReservationsList;
 	}
 	

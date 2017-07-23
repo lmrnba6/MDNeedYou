@@ -50,5 +50,7 @@ public class Business {
 	private String website;
 	@Column(name = "PASSWORD")
 	private String password;
+	@Column(name = "PHOTO")
+	private String photo;
 
 }

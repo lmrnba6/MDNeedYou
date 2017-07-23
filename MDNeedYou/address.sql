@@ -1,0 +1,15 @@
+﻿INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (1, 'newyork', 'usa', 'ny', 'broadway', '100', '10031');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (2, 'newyork', 'usa', 'ny', 'hamilton', '113', '10001');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (3, 'newyork', 'usa', 'ny', 'fashion', '1254', '10018');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (4, 'newyork', 'usa', 'ny', '11h avenue', '654', '10060');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (5, 'newyork', 'usa', 'ny', '5th avenue', '849', '10115');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (6, 'sherbrooke', 'canada', 'qc', 'laterrier', '456', 'J0B2C0');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (7, 'sherbrooke', 'canada', 'qc', 'portland', '132', 'J1C0P5');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (8, 'sherbrooke', 'canada', 'qc', 'boulevard de universite', '1480', 'J1E0H8');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (9, 'sherbrooke', 'canada', 'qc', 'galt', '1414', 'J1E1K9');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (10, 'sherbrooke', 'canada', 'qc' , 'laterrier', '1244', 'J1k3A9');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (11, 'montreal', 'canada', 'qc', 'henri-bourassa', '456', 'H1A0A1');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (12, 'montreal', 'canada', 'qc', 'jean-talon', '123', 'H1A5B5');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (13, 'montreal', 'canada', 'qc', 'mcgill', '789', 'H1B5L6');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (14, 'montreal', 'canada', 'qc', 'sherbrooke', '111', 'H1C1K1');
+INSERT INTO address( address_id, city, country, province, street_name, street_number, zip_code) VALUES (15, 'montreal', 'canada', 'qc', 'uqam', '7414', 'H1C1L2');
