@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>com.riadh.mdneedyou.App</start-class>
 	</properties>
 
 	<dependencies>
@@ -76,7 +77,18 @@
 					commandline using java -jar NAME -->
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+				<executable>true</executable>
+				</configuration>
+				<executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>      
 			</plugin>
 		</plugins>
 	</build>
+	<packaging>war</packaging>
 </project>

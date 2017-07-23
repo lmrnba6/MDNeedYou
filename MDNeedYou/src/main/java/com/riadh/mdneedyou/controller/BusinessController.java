@@ -140,7 +140,7 @@ public class BusinessController {
 					if(day.get("day").equals(av.getDay())){
 						av.setClosing((String)day.get("closing"));
 						av.setOpening((String)day.get("opening"));
-						if(day.get("working").equals("true"))
+						if(day.get("working").equals(true) || day.get("working").equals("true") )
 						 av.setWorking(true);
 						 else av.setWorking(false);
 					}
