@@ -25,7 +25,7 @@ import com.riadh.mdneedyou.service.ReservationService;
 import com.riadh.mdneedyou.service.UserService;
 import com.riadh.mdneedyou.util.Email;
 
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3000", "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3000", "http://localhost:4200", "http://mdneedyou.netlify.com"})
 @RestController
 @RequestMapping("reservation")
 public class ReservationController {

@@ -34,7 +34,7 @@ import com.riadh.mdneedyou.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3000"})
+@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3000", "http://mdneedyou.netlify.com"})
 @RestController
 @RequestMapping("business")
 public class BusinessController {
@@ -146,6 +146,7 @@ public class BusinessController {
 					}
 				}
 			}
+			availability.setAppointmentDuration(Integer.valueOf((String)post.get("appDuration")));
 			availabilityService.update(availability);
 			business.setAvailability(availability);
 			

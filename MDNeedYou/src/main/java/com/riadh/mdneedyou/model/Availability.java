@@ -27,6 +27,9 @@ public class Availability {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long availabilityId;
 	
+	@Column(name = "APPOINTMENT_DURATION")
+	private Integer appointmentDuration;
+	
 	@OneToMany
 	private List<WorkingDay> days;
 

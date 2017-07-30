@@ -13,9 +13,9 @@ import com.riadh.mdneedyou.service.UserService;
 
 
 
-@CrossOrigin(origins = {"http://localhost:8080" , "http://localhost:3000", "http://localhost:4200"} )
+@CrossOrigin(origins = {"http://localhost:8080" , "http://localhost:3000", "http://localhost:4200", "http://mdneedyou.netlify.com"} )
 @RestController
-@RequestMapping("user")
+//@RequestMapping("user")
 public class UserController {
 	
 	@Autowired
@@ -32,6 +32,13 @@ public class UserController {
 	public List<User> listUser(){
 		
 		return userService.list();
+		
+	}
+	
+	@RequestMapping(value="/")
+	public String hello(){
+		
+		return "hello";
 		
 	}
 	

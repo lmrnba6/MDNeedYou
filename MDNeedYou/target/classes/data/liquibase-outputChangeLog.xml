@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Riadh (generated)" id="1501103150640-1">
+        <createSequence sequenceName="address_address_id_seq"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-2">
+        <createSequence sequenceName="availability_availability_id_seq"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-3">
+        <createSequence sequenceName="business_business_id_seq"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-4">
+        <createSequence sequenceName="category_category_id_seq"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-5">
+        <createSequence sequenceName="contact_contact_id_seq"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-6">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-7">
+        <createSequence sequenceName="reservation_reservation_id_seq"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-8">
+        <createSequence sequenceName="working_day_working_day_id_seq"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-9">
+        <createTable tableName="address">
+            <column autoIncrement="true" name="address_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="address_pkey"/>
+            </column>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(255)"/>
+            <column name="province" type="VARCHAR(255)"/>
+            <column name="street_name" type="VARCHAR(255)"/>
+            <column name="street_number" type="BIGINT"/>
+            <column name="zip_code" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-10">
+        <createTable tableName="availability">
+            <column autoIncrement="true" name="availability_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="availability_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-11">
+        <createTable tableName="availability_working_day">
+            <column name="availability_availability_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="days_working_day_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-12">
+        <createTable tableName="business">
+            <column autoIncrement="true" name="business_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="business_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="image" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="photo" type="VARCHAR(255)"/>
+            <column name="website" type="VARCHAR(255)"/>
+            <column name="availability" type="BIGINT"/>
+            <column name="address" type="BIGINT"/>
+            <column name="category" type="BIGINT"/>
+            <column name="contact" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-13">
+        <createTable tableName="category">
+            <column autoIncrement="true" name="category_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="category_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-14">
+        <createTable tableName="contact">
+            <column autoIncrement="true" name="contact_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="contact_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-15">
+        <createTable tableName="reservation">
+            <column autoIncrement="true" name="reservation_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="reservation_pkey"/>
+            </column>
+            <column name="comment" type="VARCHAR(255)"/>
+            <column name="date" type="date"/>
+            <column name="reservation_number" type="BIGINT"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="time" type="TIME WITHOUT TIME ZONE"/>
+            <column name="business_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-16">
+        <createTable tableName="users">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-17">
+        <createTable tableName="working_day">
+            <column autoIncrement="true" name="working_day_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="working_day_pkey"/>
+            </column>
+            <column name="closing" type="VARCHAR(255)"/>
+            <column name="day" type="VARCHAR(255)"/>
+            <column name="opening" type="VARCHAR(255)"/>
+            <column name="working" type="BOOL"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-18">
+        <addPrimaryKey columnNames="user_id" constraintName="users_pkey" tableName="users"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-19">
+        <addUniqueConstraint columnNames="days_working_day_id" constraintName="uk_toa06dkdvdw5h30hfvl19a44o" tableName="availability_working_day"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-20">
+        <addForeignKeyConstraint baseColumnNames="availability_availability_id" baseTableName="availability_working_day" constraintName="fk3ybgxeb32o6fl80t7kneaawgi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="availability_id" referencedTableName="availability"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-21">
+        <addForeignKeyConstraint baseColumnNames="business_id" baseTableName="reservation" constraintName="fk9yyajcgbie49rg10maye12w1c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="business_id" referencedTableName="business"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-22">
+        <addForeignKeyConstraint baseColumnNames="address" baseTableName="business" constraintName="fkawkr2u5o4shtaru7lwmthvr59" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="address_id" referencedTableName="address"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-23">
+        <addForeignKeyConstraint baseColumnNames="category" baseTableName="business" constraintName="fkfnq3s2fvmrfh3ofuqkive6o2q" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="category_id" referencedTableName="category"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-24">
+        <addForeignKeyConstraint baseColumnNames="days_working_day_id" baseTableName="availability_working_day" constraintName="fkglcdqsfaru9ty1fwi602fyxhf" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="working_day_id" referencedTableName="working_day"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-25">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="business" constraintName="fkj9427utaq6kb8e29ik01qllv2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-26">
+        <addForeignKeyConstraint baseColumnNames="availability" baseTableName="business" constraintName="fkntsv7d3ltgi4h3w1oc64rik1c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="availability_id" referencedTableName="availability"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-27">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="reservation" constraintName="fkpr56s1usk86f9ow1hwhlcwwab" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Riadh (generated)" id="1501103150640-28">
+        <addForeignKeyConstraint baseColumnNames="contact" baseTableName="business" constraintName="fkr2ravqb7h1nvam1ff9an9fx1v" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="contact_id" referencedTableName="contact"/>
+    </changeSet>
+</databaseChangeLog>

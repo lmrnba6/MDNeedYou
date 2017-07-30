@@ -1,0 +1,15 @@
+﻿INSERT INTO availability(availability_id, appointment_duration) VALUES (1, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (2, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (3, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (4, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (5, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (6, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (7, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (8, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (9, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (10, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (11, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (12, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (13, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (14, 2);
+INSERT INTO availability(availability_id, appointment_duration) VALUES (15, 2);
