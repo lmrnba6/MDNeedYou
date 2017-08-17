@@ -34,7 +34,7 @@ import com.riadh.mdneedyou.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3000", "http://mdneedyou.netlify.com"})
+@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3000", "http://mdneedyou.netlify.com" })
 @RestController
 @RequestMapping("business")
 public class BusinessController {
@@ -75,31 +75,59 @@ public class BusinessController {
 		businessService.remove(id);
 		return businessService.list();
 	}
-	
+
 	@RequestMapping(value = "/filterList")
 	public List<Business> filterCities(@RequestBody Map<String, Object> post) throws ServletException {
 		List<Business> list = businessService.listByCity(post.get("city").toString());
-		List<Business> listFiltered = new ArrayList<>();
-		List<String> filter =  (ArrayList<String>) post.get("filter");
-		for(String f : filter){
-			for(Business b : list){
-				if(f.equals(b.getCategory().getName()))
-					listFiltered.add(b);	
+		List<Business> categoryList = new ArrayList<>();
+		List<Business> sexList = new ArrayList<>();
+		List<Business> nameList = new ArrayList<>();
+		List<String> filter = (ArrayList<String>) post.get("filter");
+		List<String> sex = (ArrayList<String>)post.get("sex");
+		String name = (String) post.get("name");
+		// filter by categories
+		if (filter.isEmpty()) {
+			categoryList = list;
+		} else {
+			for (Business business : list) {
+				for (String f : filter) {
+					if (f.equals(business.getCategory().getName())) {
+						categoryList.add(business);
+					}
+				}
 			}
 		}
-
-		return filter.isEmpty() ? list :listFiltered;
+		if (!sex.isEmpty()) {
+			for (Business business : categoryList) {
+				for(String s : sex ){
+					if (business.getUser().getSex().equals(s)) {
+						sexList.add(business);
+					}
+				}
+			}
+			categoryList = sexList;
+		}
+		if (!name.isEmpty()) {
+			for (Business business : categoryList) {
+				if (business.getName().startsWith(name)) {
+					nameList.add(business);
+				}
+			}
+			categoryList = nameList;
+		}
+		 
+		return categoryList;
 	}
-		
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/update")
 	public Business update(@RequestBody Map<String, Object> post) throws ServletException {
-		boolean photo = (boolean)post.get("photoInfo");
-		boolean personal = (boolean)post.get("personalInfo");
-		boolean businessInfo = (boolean)post.get("businessInfo");
-		boolean working = (boolean)post.get("workingInfo");
-		boolean list = (boolean)post.get("listInfo");
-		boolean calendar = (boolean)post.get("calendarInfo");
+		boolean photo = (boolean) post.get("photoInfo");
+		boolean personal = (boolean) post.get("personalInfo");
+		boolean businessInfo = (boolean) post.get("businessInfo");
+		boolean working = (boolean) post.get("workingInfo");
+		boolean list = (boolean) post.get("listInfo");
+		boolean calendar = (boolean) post.get("calendarInfo");
 		Long id = Long.valueOf(post.get("id").toString());
 		Business business = businessService.getById(id);
 		User user = business.getUser();
@@ -107,23 +135,24 @@ public class BusinessController {
 		Contact contact = business.getContact();
 		Category category = business.getCategory();
 		Availability availability = business.getAvailability();
-		
-		if(photo){
+
+		if (photo) {
 			business.setPhoto(post.get("avatarURL").toString());
-		}else if(personal){
+		} else if (personal) {
 			user.setName(post.get("ownerName").toString());
 			user.setEmail(post.get("ownerEmail").toString());
 			user.setPhone(post.get("ownerPhone").toString());
 			business.setUser(user);
-		}else if(businessInfo){
+		} else if (businessInfo) {
 			business.setName(post.get("name").toString());
 			business.setDescription(post.get("description").toString());
 			business.setPassword(post.get("password").toString());
 			business.setWebsite(post.get("webSite").toString());
-			address.setCity(post.get("city").toString().replaceAll("\\s","").toLowerCase());
+			address.setCity(post.get("city").toString().replaceAll("\\s", "").toLowerCase());
 			address.setProvince(post.get("state").toString());
 			address.setStreetName(post.get("streetName").toString());
-			address.setStreetNumber(Long.valueOf(post.get("streetNumber").toString().isEmpty() ? "0" : post.get("streetNumber").toString() ));
+			address.setStreetNumber(Long.valueOf(
+					post.get("streetNumber").toString().isEmpty() ? "0" : post.get("streetNumber").toString()));
 			address.setZipCode(post.get("zip").toString());
 			addressService.update(address);
 			contact.setEmail(post.get("email").toString());
@@ -134,51 +163,52 @@ public class BusinessController {
 			business.setCategory(category);
 			business.setContact(contact);
 			business.setAddress(address);
-		}else if(working){
-			for (Map<String, Object> day : (List<Map<String, Object>>)post.get("availability")) {
+		} else if (working) {
+			for (Map<String, Object> day : (List<Map<String, Object>>) post.get("availability")) {
 				for (WorkingDay av : availability.getDays()) {
-					if(day.get("day").equals(av.getDay())){
-						av.setClosing((String)day.get("closing"));
-						av.setOpening((String)day.get("opening"));
-						if(day.get("working").equals(true) || day.get("working").equals("true") )
-						 av.setWorking(true);
-						 else av.setWorking(false);
+					if (day.get("day").equals(av.getDay())) {
+						av.setClosing((String) day.get("closing"));
+						av.setOpening((String) day.get("opening"));
+						if (day.get("working").equals(true) || day.get("working").equals("true"))
+							av.setWorking(true);
+						else
+							av.setWorking(false);
 					}
 				}
 			}
-			availability.setAppointmentDuration(Integer.valueOf((String)post.get("appDuration")));
+			availability.setAppointmentDuration(Integer.valueOf((String) post.get("appDuration")));
 			availabilityService.update(availability);
 			business.setAvailability(availability);
-			
-		}else if(list){
-			
-		}else if(calendar){
-			
+
+		} else if (list) {
+
+		} else if (calendar) {
+
 		}
-		
+
 		businessService.update(business);
 		return business;
 	}
 
 	@RequestMapping(value = "/login")
 	public Business login(@RequestBody Map<String, Object> post) throws ServletException {
-		
+
 		String token = "";
 		String pwd = (String) post.get("password");
 		String email = (String) post.get("email");
 
-	    if (email == null || pwd == null) {
-	        throw new ServletException("Please fill in username and password");
-	    }
+		if (email == null || pwd == null) {
+			throw new ServletException("Please fill in username and password");
+		}
 
-	    Business b = businessService.login(post.get("email").toString(), post.get("password").toString());
-	    if (b == null)
-	    	throw new ServletException("business not found");
+		Business b = businessService.login(post.get("email").toString(), post.get("password").toString());
+		if (b == null)
+			throw new ServletException("business not found");
 
-	    token = Jwts.builder().claim("business", b).claim("roles", "user").setIssuedAt(new Date())
-	            .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
-	    
-	    return b;
+		token = Jwts.builder().claim("business", b).claim("roles", "user").setIssuedAt(new Date())
+				.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+
+		return b;
 
 	}
 
