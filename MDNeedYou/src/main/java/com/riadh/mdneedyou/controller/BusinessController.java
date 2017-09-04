@@ -2,10 +2,9 @@ package com.riadh.mdneedyou.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 
@@ -21,6 +20,7 @@ import com.riadh.mdneedyou.model.Availability;
 import com.riadh.mdneedyou.model.Business;
 import com.riadh.mdneedyou.model.Category;
 import com.riadh.mdneedyou.model.Contact;
+import com.riadh.mdneedyou.model.Medecin;
 import com.riadh.mdneedyou.model.User;
 import com.riadh.mdneedyou.model.WorkingDay;
 import com.riadh.mdneedyou.service.AddressService;
@@ -28,6 +28,7 @@ import com.riadh.mdneedyou.service.AvailabilityService;
 import com.riadh.mdneedyou.service.BusinessService;
 import com.riadh.mdneedyou.service.CategoryService;
 import com.riadh.mdneedyou.service.ContactService;
+import com.riadh.mdneedyou.service.MedecinService;
 import com.riadh.mdneedyou.service.ReservationService;
 import com.riadh.mdneedyou.service.UserService;
 
@@ -41,6 +42,8 @@ public class BusinessController {
 
 	@Autowired
 	BusinessService businessService;
+	@Autowired
+	MedecinService medecinService;
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -63,10 +66,103 @@ public class BusinessController {
 
 	@RequestMapping(value = "/list/{city}")
 	public List<Business> listBusiness(@PathVariable String city) {
-
-		System.out.println(city);
 		return businessService.listByCity(city);
 
+	}
+
+	@RequestMapping(value = "/patients/{id}")
+	public List<User> listUser(@PathVariable String id) {
+		Business business = businessService.getById(Long.valueOf(id));
+		return business.getPatients();
+
+	}
+
+	@RequestMapping(value = "/addPatient")
+	public List<User> addPatient(@RequestBody Map<String, Object> post) {
+		User patient = new User();
+		patient.setName(post.get("patientName").toString());
+		patient.setEmail(post.get("patientEmail").toString());
+		patient.setPhone(post.get("patientPhone").toString());
+		patient.setAge(post.get("patientAge").toString());
+		patient.setSex(post.get("patientSex").toString());
+		userService.add(patient);
+		Business business = businessService.getById(Long.valueOf(post.get("id").toString()));
+		business.getPatients().add(patient);
+		businessService.update(business);
+		return business.getPatients();
+
+	}
+
+	@RequestMapping(value = "/editPatient")
+	public List<User> editPatient(@RequestBody Map<String, Object> post) {
+		User patient = userService.getById(Long.valueOf(post.get("PatientId").toString()));
+		patient.setName(post.get("patientName").toString());
+		patient.setEmail(post.get("patientEmail").toString());
+		patient.setPhone(post.get("patientPhone").toString());
+		patient.setAge(post.get("patientAge").toString());
+		patient.setSex(post.get("patientSex").toString());;
+		userService.update(patient);
+		Business business = businessService.getById(Long.valueOf(post.get("id").toString()));
+		return business.getPatients();
+
+	}
+
+	@RequestMapping(value = "/deletePatient")
+	public List<User> deletePatient(@RequestBody Map<String, Object> post) {
+		Business business = businessService.getById(Long.valueOf(post.get("id").toString()));
+		List<User> patient = business.getPatients().stream().filter(user -> Long.valueOf(post.get("patientId").toString()) != (user.getUserId()))
+				.collect(Collectors.toList());
+		business.setPatients(patient);
+		businessService.update(business);
+		return patient;
+	}
+
+	@RequestMapping(value = "medecin/list/{id}")
+	public List<Medecin> listMedecin(@PathVariable String id) {
+		return medecinService.getByBusiness(Long.valueOf(id));
+	}
+
+	@RequestMapping(value = "medecin/add")
+	public List<Medecin> addMedecin(@RequestBody Map<String, Object> post) {
+		String id = post.get("id").toString();
+		String name = post.get("medecinName").toString();
+		String description = post.get("medecinDescription").toString();
+		Medecin medecin = new Medecin();
+		medecin.setDescription(description);
+		medecin.setName(name);
+		Business business = businessService.getById(Long.valueOf(id));
+		medecin.setBusiness(business);
+		medecinService.add(medecin);
+		return medecinService.getByBusiness(Long.valueOf(id));
+	}
+
+	@RequestMapping(value = "medecin/delete")
+	public List<Medecin> deleteMedecin(@RequestBody Map<String, Object> post) {
+		String id = post.get("id").toString();
+		String medecinId = post.get("medecinId").toString();
+		medecinService.remove(Long.valueOf(medecinId));
+		return medecinService.getByBusiness(Long.valueOf(id));
+	}
+
+	@RequestMapping(value = "medecin/update")
+	public List<Medecin> updateMedecin(@RequestBody Map<String, Object> post) {
+		String id = post.get("id").toString();
+		String medecinId = post.get("medecinId").toString();
+		String name = post.get("medecinName").toString();
+		String description = post.get("medecinDescription").toString();
+		Medecin medecin = medecinService.getById(Long.valueOf(medecinId));
+		medecin.setDescription(description);
+		medecin.setName(name);
+		medecinService.update(medecin);
+		return medecinService.getByBusiness(Long.valueOf(id));
+	}
+
+	@RequestMapping(value = "/list/doctor/{name}")
+	public List<Business> listBusinessByName(@PathVariable String name) {
+		List<Business> list = new ArrayList<>();
+		Business business = businessService.getByName(name);
+		list.add(business);
+		return list;
 	}
 
 	@RequestMapping(value = "/remove/{id}")
@@ -83,7 +179,7 @@ public class BusinessController {
 		List<Business> sexList = new ArrayList<>();
 		List<Business> nameList = new ArrayList<>();
 		List<String> filter = (ArrayList<String>) post.get("filter");
-		List<String> sex = (ArrayList<String>)post.get("sex");
+		List<String> sex = (ArrayList<String>) post.get("sex");
 		String name = (String) post.get("name");
 		// filter by categories
 		if (filter.isEmpty()) {
@@ -99,7 +195,7 @@ public class BusinessController {
 		}
 		if (!sex.isEmpty()) {
 			for (Business business : categoryList) {
-				for(String s : sex ){
+				for (String s : sex) {
 					if (business.getUser().getSex().equals(s)) {
 						sexList.add(business);
 					}
@@ -115,7 +211,7 @@ public class BusinessController {
 			}
 			categoryList = nameList;
 		}
-		 
+
 		return categoryList;
 	}
 

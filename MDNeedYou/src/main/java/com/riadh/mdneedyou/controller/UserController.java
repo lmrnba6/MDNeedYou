@@ -44,7 +44,6 @@ public class UserController {
 	
 	@RequestMapping(value="/remove/{id}")
 	public List<User> removeUser(@PathVariable Long id){
-		
 		userService.remove(id);
 		return userService.list();
 	}

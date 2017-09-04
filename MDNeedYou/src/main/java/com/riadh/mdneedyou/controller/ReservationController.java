@@ -57,6 +57,7 @@ public class ReservationController {
 			user.setEmail(email);
 			user.setName(name);
 			user.setPhone(phone);
+			user.setAge("");
 			userService.add(user);
 			reservation.setBusiness(business);
 			reservation.setComment(message);
@@ -75,6 +76,9 @@ public class ReservationController {
 			String approved = reservation.getStatus().equals("pending") ? "approved" : "pending";
 			reservation.setStatus(approved);
 			reservationService.update(reservation);
+			Business business = businessService.getById(Long.valueOf(id));
+			business.getPatients().add(reservation.getUser());
+			businessService.update(business);
 		}
 		List<Reservation> list = reservationService.getByBusiness(Long.valueOf(id));
 		return list;

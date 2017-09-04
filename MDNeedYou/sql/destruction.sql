@@ -7,6 +7,10 @@ DROP TABLE contact CASCADE;
 DROP TABLE reservation CASCADE;
 DROP TABLE users CASCADE;
 DROP TABLE working_day CASCADE;
+DROP TABLE treatment CASCADE;
+DROP TABLE medecin CASCADE;
+
+
 
 
 
