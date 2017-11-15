@@ -95,7 +95,7 @@ public class BusinessController {
 
 	@RequestMapping(value = "/editPatient")
 	public List<User> editPatient(@RequestBody Map<String, Object> post) {
-		User patient = userService.getById(Long.valueOf(post.get("PatientId").toString()));
+		User patient = userService.getById(Long.valueOf(post.get("patientId").toString()));
 		patient.setName(post.get("patientName").toString());
 		patient.setEmail(post.get("patientEmail").toString());
 		patient.setPhone(post.get("patientPhone").toString());

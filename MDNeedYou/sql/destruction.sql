@@ -9,6 +9,11 @@ DROP TABLE users CASCADE;
 DROP TABLE working_day CASCADE;
 DROP TABLE treatment CASCADE;
 DROP TABLE medecin CASCADE;
+DROP TABLE business_users CASCADE;
+DROP TABLE one_treatment CASCADE;
+DROP TABLE treatment_medecins CASCADE;
+DROP TABLE treatment_one_treatment CASCADE;
+DROP TABLE users_treatment CASCADE;
 
 
 
